@@ -2,6 +2,7 @@ const dotenv = require("dotenv");
 const { Telegraf, Markup } = require("telegraf");
 const axios = require("axios");
 const { message } = require("telegraf/filters");
+const http = require("http"); // Import http module
 
 dotenv.config();
 
@@ -119,3 +120,9 @@ bot.launch();
 // Enable graceful stop
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
+
+// Dummy HTTP server to keep Render happy
+const PORT = process.env.PORT || 3000;
+http.createServer((req, res) => res.end("Bot is running")).listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
